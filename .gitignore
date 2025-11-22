@@ -1,0 +1,89 @@
+# Virtual environments
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# MyPy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
+
+# Pydantic / settings
+.env
+.env.*        # environment/local overrides
+
+# SQL database files
+*.sqlite3
+*.db
+*.db-journal
+
+# Alembic-generated caches (keep migrations/ tracked)
+#alembic.ini  # if you prefer to keep local DB URLs out; otherwise remove this line
+# Note: migrations/ should remain tracked (do NOT ignore migrations/)
+
+# Logs
+*.log
+
+# IDEs and editors
+.vscode/
+*.code-workspace
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PyCharm
+/.idea
+*.iml
+
+# Jupyter
+.ipynb_checkpoints
+
+# Temporary files
+*.swp
+*~
+*.tmp
+
+# Node / frontend (if added later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build artifacts
+*.so
+*.dylib
+*.dll
