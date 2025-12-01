@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from src.controller.event_router import event_router
+from src.controller.ticket_router import ticket_router
 from contextlib import asynccontextmanager
 from src.db.database_config import init_db
 
@@ -22,3 +23,4 @@ app = FastAPI(
 )
 
 app.include_router(event_router, prefix="/events", tags=["Events"])
+app.include_router(ticket_router, prefix="/tickets", tags=["Tickets"])

@@ -1,6 +1,9 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 import uuid
 from datetime import datetime
+from typing import List
+
+# from src.models.Ticket import Ticket
 
 
 class Event(SQLModel, table=True):
@@ -13,3 +16,5 @@ class Event(SQLModel, table=True):
     event_capacity: int = Field(nullable=False)
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
+    # Relationships
+    tickets: List["Ticket"] = Relationship(back_populates="event")
