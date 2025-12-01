@@ -6,7 +6,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from src.config.settings import settings
 from sqlmodel import SQLModel
-from src.models import Event
+from src.models import Event, Ticket
 from alembic import context
 
 # this is the Alembic Config object, which provides
