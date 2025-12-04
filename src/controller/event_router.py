@@ -3,6 +3,7 @@ from src.services.event_service import EventService
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.db.database_config import get_session
 from src.schemas.event_schemas import EventModel, EventCreateModel, EventUpdateModel
+from src.models.Ticket import Ticket
 from uuid import UUID
 from typing import List
 
@@ -55,3 +56,15 @@ async def delete_event(event_uid: UUID, session: AsyncSession = Depends(get_sess
     deleted = await event_service.delete_event(event_uid, session)
     if deleted:
         return f"event with id {event_uid} deleted successfully"
+
+
+@event_router.get(
+    "/alltickets/{event_uid}",
+    status_code=status.HTTP_200_OK,
+    response_model=List[Ticket],
+)
+async def get_event_tickets(
+    event_uid: UUID, session: AsyncSession = Depends(get_session)
+):
+    all_event_tickets = await event_service.get_event_tickets(event_uid, session)
+    return all_event_tickets

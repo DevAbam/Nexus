@@ -7,6 +7,7 @@ from src.models.Event import Event
 
 class TicketCreateModel(BaseModel):
     event_uid: uuid.UUID
+    quantity: int = 1
 
 
 class TicketModel(BaseModel):

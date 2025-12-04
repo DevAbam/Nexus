@@ -5,9 +5,8 @@ from src.schemas.event_schemas import EventCreateModel, EventUpdateModel
 from datetime import datetime
 from uuid import UUID
 from fastapi import HTTPException, status
-
-
-# TODO -> remember to update the updated_at field after updating an event
+from typing import List
+from src.models.Ticket import Ticket
 
 
 class EventService:
@@ -73,3 +72,7 @@ class EventService:
         await session.commit()
 
         return True
+
+    async def get_event_tickets(self, event_uid: UUID, session: AsyncSession):
+        event = await self.get_event_by_Id(event_uid=event_uid, session=session)
+        return event.tickets
