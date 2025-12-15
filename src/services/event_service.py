@@ -7,6 +7,8 @@ from uuid import UUID
 from fastapi import HTTPException, status
 from typing import List
 from src.models.Ticket import Ticket
+from src.config.images import imagekit
+from src.config.images import upload_event_poster, delete_event_poster
 
 
 class EventService:
@@ -25,15 +27,31 @@ class EventService:
         else:
             return None
 
-    async def create_event(self, event_data: EventCreateModel, session: AsyncSession):
-        event_data_dict = event_data.model_dump()
-        event_data_dict["event_date"] = datetime.strptime(
-            event_data_dict["event_date"], "%Y-%m-%d"
-        )
-        new_event = Event(**event_data_dict)
+    async def create_event(
+        self,
+        event_data: EventCreateModel,
+        poster_bytes: bytes | None,
+        poster_filename: str | None,
+        session: AsyncSession,
+    ):
+        data = event_data.model_dump()
+        data["event_date"] = datetime.strptime(data["event_date"], "%Y-%m-%d")
+
+        if poster_bytes and poster_filename:
+            upload_result = upload_event_poster(poster_bytes, poster_filename)
+            data["event_poster_url"] = upload_result["url"]
+            data["event_poster_file_id"] = upload_result["fileId"]
+
+        new_event = Event(**data)
         session.add(new_event)
-        await session.commit()
-        await session.refresh(new_event)
+
+        try:
+            await session.commit()
+            await session.refresh(new_event)
+        except Exception:
+            await session.rollback()
+            raise
+
         return new_event
 
     async def update_event(
@@ -67,6 +85,9 @@ class EventService:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Event with the given id not found",
             )
+
+        if to_delete.event_poster_file_id:
+            delete_event_poster(to_delete.event_poster_file_id)
 
         await session.delete(to_delete)
         await session.commit()
