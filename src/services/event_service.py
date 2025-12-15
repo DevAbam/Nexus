@@ -9,6 +9,7 @@ from typing import List
 from src.models.Ticket import Ticket
 from src.config.images import imagekit
 from src.config.images import upload_event_poster, delete_event_poster
+from src.models.Event import EventCategory
 
 
 class EventService:
@@ -97,3 +98,15 @@ class EventService:
     async def get_event_tickets(self, event_uid: UUID, session: AsyncSession):
         event = await self.get_event_by_Id(event_uid=event_uid, session=session)
         return event.tickets
+
+    async def get_event_by_category(
+        self, event_tag: EventCategory, session: AsyncSession
+    ):
+        statement = (
+            select(Event)
+            .where(Event.event_tag == event_tag)
+            .order_by(desc(Event.created_at))
+        )
+        result = await session.exec(statement)
+        data = result.all()
+        return data

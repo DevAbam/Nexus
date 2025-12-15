@@ -12,6 +12,7 @@ from src.models.Ticket import Ticket
 from uuid import UUID
 from typing import List
 from src.config.images import validate_file_size, validate_image_type
+from src.models.Event import EventCategory
 
 event_router = APIRouter()
 event_service = EventService()
@@ -20,6 +21,12 @@ event_service = EventService()
 @event_router.get("/", status_code=status.HTTP_200_OK, response_model=List[EventModel])
 async def get_all_events(session: AsyncSession = Depends(get_session)):
     all_events = await event_service.get_all_events(session)
+    return all_events
+
+
+@event_router.get("/category")
+async def get_event_by_category(event_tag: EventCategory, session=Depends(get_session)):
+    all_events = await event_service.get_event_by_category(event_tag, session)
     return all_events
 
 
