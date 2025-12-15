@@ -27,6 +27,8 @@ class Event(SQLModel, table=True):
     event_location_name: str = Field(nullable=False)
     event_longitude: Optional[float] = 0.00
     event_latitude: Optional[float] = 0.00
+    event_poster_url: str = Field(nullable=False)
+    event_poster_file_id: str | None = Field(default=None)
     event_tag: EventCategory = Field(nullable=False)
     event_date: datetime
     event_capacity: int = Field(nullable=False)
