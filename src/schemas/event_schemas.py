@@ -11,6 +11,8 @@ class EventModel(BaseModel):
     event_name: str
     event_description: str
     event_location_name: str
+    event_poster_url: str
+    event_poster_file_id: str
     event_longitude: Optional[float] = 0.00
     event_latitude: Optional[float] = 0.00
     event_tag: EventCategory

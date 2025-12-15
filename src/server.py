@@ -22,5 +22,19 @@ app = FastAPI(
     lifespan=life_span,
 )
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 app.include_router(event_router, prefix="/events", tags=["Events"])
 app.include_router(ticket_router, prefix="/tickets", tags=["Tickets"])
